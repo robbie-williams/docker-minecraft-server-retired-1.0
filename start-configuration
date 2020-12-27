@@ -90,6 +90,10 @@ case "${TYPE^^}" in
     exec ${SCRIPTS:-/}start-deployPaper "$@"
   ;;
 
+  PAPERGEYSER)
+    exec ${SCRIPTS:-/}start-deployPaper-withGeyser "$@"
+  ;;
+
   TUINITY)
     exec ${SCRIPTS:-/}start-deployTuinity "$@"
   ;;
