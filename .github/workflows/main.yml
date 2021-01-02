@@ -4,20 +4,8 @@ on:
   push:
     branches:
       - master
-      - openj9
-      - openj9-nightly
-      - adopt11
-      - adopt13
-      - adopt14
-      - adopt15
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
-      - "[0-9]+.[0-9]+.[0-9]+-openj9"
-      - "[0-9]+.[0-9]+.[0-9]+-openj9-nightly"
-      - "[0-9]+.[0-9]+.[0-9]+-adopt11"
-      - "[0-9]+.[0-9]+.[0-9]+-adopt13"
-      - "[0-9]+.[0-9]+.[0-9]+-adopt14"
-      - "[0-9]+.[0-9]+.[0-9]+-adopt15"
 
 jobs:
   test:
@@ -37,15 +25,27 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Build and push Docker images
-      uses: docker/build-push-action@v1.1.0
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        repository: itzg/minecraft-server
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        tag_with_ref: true
-        tag_with_sha: false
-        cache_froms: itzg/minecraft-server:latest
-        add_git_labels: true
-        labels: org.opencontainers.image.url=https://github.com/itzg/docker-minecraft-server,org.opencontainers.image.documentation=https://github.com/itzg/docker-minecraft-server
-        push: true
+        aws-access-key-id: ${{ secrets.AWS_RUST_SERVER_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_RUST_SERVER_SECRET_ACCESS_KEY }}
+        aws-region: ap-southeast-2
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+       - name: Build, tag, and push image to Amazon ECR
+         id: build-image
+         env:
+           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+           ECR_REPOSITORY: rust-server-docker
+           IMAGE_TAG: ${{ github.sha }}-prod
+           run: |
+             # Build a docker container and
+             # push it to ECR so that it can
+             # be deployed to ECS.
+             docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+             docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+             echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
