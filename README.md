@@ -1,6 +1,7 @@
 [![Build and Publish](https://github.com/robbie-williams/docker-minecraft-server/workflows/Build%20and%20Publish/badge.svg)](https://github.com/itzg/docker-minecraft-server/actions)
 
 This is a direct copy of the ITZG docker-minecraft-server project. Non-forked for cleanliness and personal upkeep, but if you want to support itzg's great work feel free to [![](https://img.shields.io/badge/Donate-Buy%20me%20a%20coffee-orange.svg)](https://www.buymeacoffee.com/itzg)
+
 This repo also leverages the geyser project (https://geysermc.org/) however they are presently not accepting donations.
 
 This repo is different in that;
