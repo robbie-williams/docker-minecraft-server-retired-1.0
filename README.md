@@ -1,9 +1,11 @@
-[![Docker Pulls](https://img.shields.io/docker/pulls/itzg/minecraft-server.svg)](https://hub.docker.com/r/itzg/minecraft-server/)
-[![Docker Stars](https://img.shields.io/docker/stars/itzg/minecraft-server.svg?maxAge=2592000)](https://hub.docker.com/r/itzg/minecraft-server/)
-[![GitHub Issues](https://img.shields.io/github/issues-raw/itzg/docker-minecraft-server.svg)](https://github.com/itzg/docker-minecraft-server/issues)
-[![Discord](https://img.shields.io/discord/660567679458869252?label=Discord&logo=discord)](https://discord.gg/DXfKpjB)
-[![Build and Publish](https://github.com/itzg/docker-minecraft-server/workflows/Build%20and%20Publish/badge.svg)](https://github.com/itzg/docker-minecraft-server/actions)
-[![](https://img.shields.io/badge/Donate-Buy%20me%20a%20coffee-orange.svg)](https://www.buymeacoffee.com/itzg)
+[![Build and Publish](https://github.com/robbie-williams/docker-minecraft-server/workflows/Build%20and%20Publish/badge.svg)](https://github.com/itzg/docker-minecraft-server/actions)
+
+This is a direct copy of the ITZG docker-minecraft-server project. Non-forked for cleanliness and personal upkeep, but if you want to support itzg's great work feel free to [![](https://img.shields.io/badge/Donate-Buy%20me%20a%20coffee-orange.svg)](https://www.buymeacoffee.com/itzg)
+This repo also leverages the geyser project (https://geysermc.org/) however they are presently not accepting donations.
+
+This repo is different in that;
+- It adds the option of baking geyser in on deploy so your non-java buddies, buddettes, and buddoes can come and play too
+- Github Actions Workflows are AWS oriented i.e. deploy to ECR/ECS
 
 This docker image provides a Minecraft Server that will automatically download the latest stable
 version at startup. You can also run/upgrade to any specific version or the
@@ -36,13 +38,6 @@ With that you can easily view the logs, stop, or re-start the container:
 
     docker start mc
 *Be sure to always include `-e EULA=TRUE` in your commands, as Mojang/Microsoft requires EULA acceptance.*
-
-## Looking for a Bedrock Dedicated Server
-
-For Minecraft clients running on consoles, mobile, or native Windows, you'll need to
-use this image instead:
-
-[itzg/minecraft-bedrock-server](https://hub.docker.com/r/itzg/minecraft-bedrock-server)
 
 ## Interacting with the server
 
